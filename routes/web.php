@@ -7,7 +7,14 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SalesController;
 
 route::get('/', HomeController::class);
-route::get('/category/{category}', ProdukController::class);
+
+Route::prefix('/category')->group(function () {
+    Route::get('/food-beverage', [ProdukController::class, 'foodBeverage']);
+    Route::get('/beauty-health', [ProdukController::class, 'beautyhealth']);
+    Route::get('/home-care', [ProdukController::class, 'homecare']);
+    Route::get('/baby-kid', [ProdukController::class, 'babyKid']);
+});
+
 route::get('/user/{id}/{nama}', UserController::class);
 route::get('/sales', SalesController::class);
 
