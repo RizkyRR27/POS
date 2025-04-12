@@ -18,9 +18,9 @@ class UserController extends Controller
             'password' => Hash::make('12345'),
             
         ];
-        UserModel::create($data);
+       // UserModel::create($data);
 
-        $user = UserModel::all();
+        $user = UserModel::find(1);
         return view('user', ['data' => $user]);
 
 
