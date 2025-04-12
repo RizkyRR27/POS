@@ -30,7 +30,7 @@ class UserController extends Controller
         // $user = UserModel::all(); //ambil semua dari tabel m_user
         // return view('user', ['data' => $user]);
 
-        //tambah data user dengan eloquent model
+        // //tambah data user dengan eloquent model
         // $data = [
         //     'username' => 'customer-1',
         //     'nama' => 'Pelanggan',
