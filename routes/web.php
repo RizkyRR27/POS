@@ -1,23 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\LevelController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SalesController;
-
-route::get('/', HomeController::class);
-
-Route::prefix('/category')->group(function () {
-    Route::get('/food-beverage', [ProdukController::class, 'foodBeverage']);
-    Route::get('/beauty-health', [ProdukController::class, 'beautyhealth']);
-    Route::get('/home-care', [ProdukController::class, 'homecare']);
-    Route::get('/baby-kid', [ProdukController::class, 'babyKid']);
-});
-
-route::get('/user/{id}/{nama}', UserController::class);
-route::get('/sales', SalesController::class);
-
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +16,9 @@ route::get('/sales', SalesController::class);
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/level', [LevelController::class, 'index']);
+Route::get('/kategori', [KategoriController::class, 'index']);
+Route::get('/user', [UserController::class, 'index']);
