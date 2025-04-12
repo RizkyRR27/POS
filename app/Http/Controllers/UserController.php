@@ -9,19 +9,22 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index() {
-        // tambah data user dengan eloquent model
-        $data = [
-            'level_id' => 2,
-            'username' => 'manager_tiga',
-            'nama' => 'Manager 3',
-            'password' => Hash::make('12345'),
-            
-        ];
-       // UserModel::create($data);
+    public function index()
+    {
 
-        $user = UserModel::where('level_id',1)->first();
+        $user = UserModel::firstOrCreate(
+            [
+                'username' => 'manager22',
+                'nama' => 'Manager dua dua',
+                'password' => Hash::make('12345'),
+                'level_id' => 2
+            ],
+        );
         return view('user', ['data' => $user]);
+        // UserModel::create($data);
+
+        // $user = UserModel::where('level_id', 1)->first();
+        // return view('user', ['data' => $user]);
 
 
         // $user = UserModel::all();
