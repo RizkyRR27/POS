@@ -26,3 +26,4 @@ class KategoriSeeder extends Seeder
         DB::table('m_kategori')->insert($data);
     }
     }
+
