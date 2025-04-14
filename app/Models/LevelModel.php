@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     use HasFactory;
 
     protected $table = 'm_level';
+    protected $fillable = ['level_kode', 'level_nama'];
+
     protected $primaryKey = 'level_id';
 
     public function users(): HasMany

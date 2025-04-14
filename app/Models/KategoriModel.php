@@ -15,8 +15,9 @@ class KategoriModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'm_kategori';
-    protected $primaryKey = 'kategori_id';
+    protected $table = 'm_kategori'; 
+    
+    protected $fillable = ['kategori_kode', 'kategori_nama'];
     /**
      * The attributes that are mass assignable.
      *
