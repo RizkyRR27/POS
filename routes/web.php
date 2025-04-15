@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [UserController::class, 'index']);       // menampilkan halaman awal user
-        Route::post('/user/list', [UserController::class, 'list']);   // menampilkan data user dalam bentuk json untuk datatables
+        Route::post('/list', [UserController::class, 'list']);   // menampilkan data user dalam bentuk json untuk datatables
         Route::get('/create', [UserController::class, 'create']); // menampilkan halaman form tambah user
         Route::post('/', [UserController::class, 'store']);      // menyimpan data user baru
         Route::get('/create_ajax', [UserController::class, 'create_ajax']); // menampilkan halaman form tambah user
@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']); // menghapus data user
         Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']); // menghapus data user
         Route::delete('/{id}', [UserController::class, 'destroy']); // menghapus data user
+        Route::get('/{id}', [UserController::class, 'show']); // menampilkan detail user
 
     });
     Route::group(['prefix' => 'kategori'], function () {
@@ -117,6 +118,14 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // menghapus data user
             Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // menghapus data user
             Route::delete('/{id}', [BarangController::class, 'destroy']); // menghapus data user
+        });
+    });
+     // Route untuk semua role (ADM, MNG, STF) - Hanya View
+     Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
+        Route::group(['prefix' => 'stok'], function () {
+            Route::get('/', [StokController::class, 'index']);
+            Route::post('/list', [StokController::class, 'list']); // Gunakan POST untuk DataTables
+            Route::get('/{id}', [StokController::class, 'show']); // Jika ada fitur detail
         });
     });
 });

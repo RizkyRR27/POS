@@ -64,7 +64,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                "url": "{{ url('/user/user/list') }}",
+                "url": "{{ url('/user/list') }}",
                 "dataType": "json",
                 "type": "post",
                 "data": function(d) {
