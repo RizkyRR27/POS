@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StokController;
+use App\Http\Controllers\PenjualController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\BarangController;
@@ -68,8 +70,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']); // menghapus data user
         Route::delete('/{id}', [KategoriController::class, 'destroy']); // menghapus data user
     });
-     Route::middleware(['authorize:ADM'])->group(function () {
-     Route::group(['prefix' => 'level'], function () {  
+    Route::middleware(['authorize:ADM'])->group(function () {
+        Route::group(['prefix' => 'level'], function () {
             Route::get('/', [LevelController::class, 'index']); // menampilkan halaman awal Level
             Route::post('/list', [LevelController::class, 'list']); // menampilkan data Level dalam bentuk json untuk datatables
             Route::get('/create', [LevelController::class, 'create']); // menampilkan halaman form tambah Level
@@ -120,15 +122,55 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{id}', [BarangController::class, 'destroy']); // menghapus data user
         });
     });
-     // Route untuk semua role (ADM, MNG, STF) - Hanya View
-     Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
+    // Route untuk semua role (ADM, MNG, STF) - Hanya View
+    Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
         Route::group(['prefix' => 'stok'], function () {
             Route::get('/', [StokController::class, 'index']);
             Route::post('/list', [StokController::class, 'list']); // Gunakan POST untuk DataTables
             Route::get('/{id}', [StokController::class, 'show']); // Jika ada fitur detail
         });
     });
+    // Route khusus Admin & Manager (ADM, MNG) - CRUD
+    Route::middleware(['authorize:ADM,MNG'])->group(function () {
+        Route::group(['prefix' => 'stok'], function () {
+            // Create
+            Route::get('/create_ajax', [StokController::class, 'create_ajax']);
+            Route::post('/ajax', [StokController::class, 'store_ajax']);
+
+            // Update
+            Route::get('/{id}/edit_ajax', [StokController::class, 'edit_ajax']);
+            Route::put('/{id}/update_ajax', [StokController::class, 'update_ajax']);
+
+            // Delete
+            Route::get('/{id}/delete_ajax', [StokController::class, 'confirm_ajax']);
+            Route::delete('/{id}/delete_ajax', [StokController::class, 'delete_ajax']);
+
+            // Export
+            Route::get('/export_excel', [StokController::class, 'export_excel']);
+            Route::get('/export_pdf', [StokController::class, 'export_pdf']);
+        });
+    });
+    Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
+        Route::group(['prefix' => 'penjualan'], function () {
+            Route::get('/', [PenjualController::class, 'index'])->name('penjualan.index');
+            Route::post('/list', [PenjualController::class, 'list'])->name('penjualan.list');
+            Route::get('/{id}', [PenjualController::class, 'show'])->name('penjualan.show');
+            // Create
+            Route::get('/create_ajax', [PenjualController::class, 'create_ajax'])->name('penjualan.create_ajax');
+            Route::post('/ajax', [PenjualController::class, 'store_ajax'])->name('penjualan.store_ajax');
+
+            // Update
+            // Route::get('/{id}/edit_ajax', [PenjualController::class, 'edit_ajax'])->name('penjualan.edit_ajax');
+            // Route::put('/{id}/update_ajax', [PenjualController::class, 'update_ajax'])->name('penjualan.update_ajax');
+
+            // Delete
+            Route::get('/{id}/delete_ajax', [PenjualController::class, 'confirm_ajax'])->name('penjualan.confirm_ajax');
+            Route::delete('/{id}/delete_ajax', [PenjualController::class, 'delete_ajax'])->name('penjualan.delete_ajax');
+        });
+    });
 });
+
+    
 
 // Route::get('/', function () {
 //     return view('welcome');
